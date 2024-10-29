@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -17,7 +18,9 @@ import modelo.Planta;
 public class Principal {
 	
 	public static void main(String[] args) {
-		System.out.println("INI");
+		Principal p = new Principal();
+		//Sirve para llamar al metodo para mostrar el menu
+		//p.menu();
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -78,8 +81,6 @@ public class Principal {
 			System.out.println("Se ha producido un IOException: " + e.getLocalizedMessage());
 			e.printStackTrace();
 		}
-		
-		
-		System.out.println("FIN");
 	}
+
 }
