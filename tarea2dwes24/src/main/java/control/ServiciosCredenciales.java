@@ -14,10 +14,10 @@ public class ServiciosCredenciales {
         credencialesDAO = (CredencialesDAO) con.getCredencialesDAO();
     }
     
-    public boolean validarPlanta(Credenciales cr) {
+    public boolean validarCredenciales(Credenciales cr) {
         boolean ret = false;
         if (cr.getUsuario().isEmpty()) return false;
-        if (cr.getUsuario().length() < 3 || cr.getUsuario().length() > 20) return false;
+        if (cr.getUsuario().length() < 1 || cr.getUsuario().length() > 50) return false;
         
         return true;
     }

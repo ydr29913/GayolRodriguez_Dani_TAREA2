@@ -34,8 +34,18 @@ public class PlantaDAO {
     }
 
     public int modificar(Planta p) {
-        // TODO Auto-generated method stub
-        return 0;
+    	 try {
+             ps = con.prepareStatement("UPDATE plantas SET nombreComun = ?, nombreCientifico = ? WHERE codigo = ?");
+             ps.setString(1, p.getNombreComun());
+             ps.setString(2, p.getNombreCientifico());
+             ps.setString(3, p.getCodigo());
+
+             return ps.executeUpdate();
+         } catch (SQLException e) {
+             System.out.println("Error al modificar planta: " + e.getMessage());
+         }
+         return 0;
+    	// TODO Auto-generated method stub
     }
 
     public int eliminar(Planta ej) {

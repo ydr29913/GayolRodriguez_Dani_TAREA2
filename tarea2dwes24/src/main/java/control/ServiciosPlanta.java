@@ -17,18 +17,19 @@ public class ServiciosPlanta {
     }
 
     public boolean validarPlanta(Planta p) {
-        boolean ret = false;
-        if (p.getCodigo() == null || p.getCodigo().isEmpty()) {
+        if (p.getCodigo() == "") {
             System.out.println("El código de la planta no puede estar vacío.");
-            return false;
-        }
-        if (p.getCodigo().length() < 3 || p.getCodigo().length() > 20) {
             return false;
         }
         
         return true;
     }
 
+    public boolean esCodigoUnico(String codigo) throws SQLException {
+        Planta plantaExistente = plantaDAO.findByCodigo(codigo);
+        return plantaExistente == null;
+    }
+    
     /*
     public boolean validarPlanta(Planta p) {
         boolean ret = true;
@@ -50,12 +51,40 @@ public class ServiciosPlanta {
     public void mostrarPlantas() throws SQLException {
         List<Planta> plantas = plantaDAO.findAll();
         for (Planta planta : plantas) {
-            System.out.println("Código: " + planta.getCodigo() + ", Nombre Común: " + planta.getNombreComun() +
-                    ", Nombre Científico: " + planta.getNombreCientifico());
+            System.out.println("Código: " + planta.getCodigo() + ", Nombre Común: " + planta.getNombreComun() + ", Nombre Científico: " + planta.getNombreCientifico());
         }
     }
     
+    /*
     public int insertar(Planta e) throws SQLException {
         return plantaDAO.insertar(e);
+    }
+    */
+    
+    public boolean insertarPlanta(Planta e) throws SQLException {
+        if (!validarPlanta(e)) {
+            return false;
+        }
+
+        if (!esCodigoUnico(e.getCodigo())) {
+            System.out.println("El código de la planta ya existe en la base de datos.");
+            return false;
+        }
+
+        return plantaDAO.insertar(e) > 0;
+    }
+    
+    public boolean modificarPlanta(Planta e) throws SQLException {
+        if (!validarPlanta(e)) {
+            return false;
+        }
+
+        Planta plantaExistente = plantaDAO.findByCodigo(e.getCodigo());
+        if (plantaExistente == null) {
+            System.out.println("La planta con el código " + e.getCodigo() + " no existe.");
+            return false;
+        }
+
+        return plantaDAO.modificar(e) > 0;
     }
 }

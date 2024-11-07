@@ -1,5 +1,9 @@
 package control;
 
+import java.sql.SQLException;
+
+import modelo.Planta;
+
 public class Controlador {
 
     public static Controlador servicios;
@@ -22,6 +26,25 @@ public class Controlador {
         servPersona = new ServiciosPersona();
         servMensaje = new ServiciosMensaje();
     }
+    
+    public boolean insertarPlanta(Planta p) {
+        try {
+            return servPlanta.insertarPlanta(p);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean modificarPlanta(Planta p) {
+        try {
+            return servPlanta.modificarPlanta(p);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
 
     public ServiciosPlanta getServiciosPlanta() {
         return servPlanta;
